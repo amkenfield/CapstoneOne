@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Track Unpacker</title>
+
+  <link rel="stylesheet"
+        href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+  <script src="https://unpkg.com/jquery"></script>
+  <script src="https://unpkg.com/popper"></script>
+  <script src="https://unpkg.com/bootstrap"></script>
+
+  <link rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+  <link rel="stylesheet" href="/static/stylesheets/style.css">
+  <link rel="shortcut icon" href="/static/favicon.ico">
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+<!-- Honestly, I think it's best at this point to leave the nav/etc 
+     for after most/all of the general framework is set up.
+    But will leave the below as a guide for when it's time to address it 
+  
+    Change of heart! this provides the structure for the entire site;
+    it all starts from here!-->
+    <nav class="navbar navbar-expand">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a href="/" class="navbar-brand">
+        <!-- WILL NEED to come up with some image/text/etc to go below -->
+        <img src="" alt="logo">
+        <span>Track Unpacker</span>
+      </a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      {% if request.endpoint != None %}
+      <li>
+        <!-- ITEM TO STYLE: -->
+        <form class="navbar-form navbar-right" action="/tracks">
+          <input name="q" class="form-control" placeholder="Search our Database of Tracks" id="search">
+          <button class="btn btn-default">
+            <span class="fa fa-search"></span>
+          </button>
+        </form>
+        <!-- -------------- -->
+      </li>
+      {% endif %}
+      {% if not g.user %}
+      <li><a href="/signup">Sign up</a></li>
+      <li><a href="/login">Log in</a></li>
+      {% else %}
+      <li>
+        <a href="/users/{{ g.user.id }}">
+          <img src="{{ g.user.image_url }}" alt="{{ g.user.username }}">
+        </a>
+      </li>
+      <li><a href="/logout">Log out</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+
+<!-- The below can be left unchanged from Warbler (I think) -->
+<div class="container">
+  {% for category, message in get_flashed_messages(with_categories=True) %}
+  <div class="alert alert-{{ category }}">{{ message }}</div>
+  {% endfor %}
+
+  {% block content %}
+  {% endblock %}
+
+</div>
+</body>
+</html>

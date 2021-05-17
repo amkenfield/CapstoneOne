@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Leaving the bare skeleton; (MUCH) styling to come -->
+<div class="container">
+    <div class="row">
+        <ul class="list-group" id="search_results">
+            {% for track in tracks %}
+                <!-- come back to the actual HTML here in a bit;
+                    see 'likes.html' on Warbler for reference -->
+                {{track.name}}
+                {{track.album}}
+                {{track.artist}}
+                
+                <!-- Here's the crux, I think: 
+                    somehow send along the {{track.id}}
+                    (this being the SPOTIFY id);
+                    this is what's compared to our db in the route - 
+                    through a form w/action='/tracks/search' ???-->
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- This is duplicated - may want to extract into own template? -->
+<form id="search-form" action="/search" method="GET">
+    <div>
+        <label for="q">Track Name: </label>
+        <input type="text" name="q" id="q">
+    </div>
+    <button>Search Spotify!</button>
+</form>
+
+<!-- Should there be some sort of 'Return Home' button/link/etc? -->
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row justify-content-end">
+      <div class="col-sm-9">
+        <div class="row">
+
+          {% for track in tracks %}
+
+            <div class="col-lg-4 col-md-6 col-12">
+              <!-- change this class -->
+              <div class="card user-card">
+                <div class="card-inner">
+                  <div class="card-contents">
+                    <a href="/tracks/{{track.id}}" class="card-link">
+                      <p>{{ track.name }}</p>
+                    </a>
+
+                    {% if g.user %}
+                      <!-- Can I come up with a better name than 'is_following()'? -->
+                      {% if g.user.is_following(track) %}
+                        <form method="POST"
+                              action="/users/stop-following/{{ track.id }}">
+                          <button class="btn btn-primary btn-sm">Remove Track from Library</button>
+                        </form>
+                      {% else %}
+                        <form method="POST"
+                              action="/users/follow/{{ track.id }}">
+                          <button class="btn btn-outline-primary btn-sm">Add Track to Library</button>
+                        </form>
+                      {% endif %}
+                    {% endif %}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+{% endblock %}

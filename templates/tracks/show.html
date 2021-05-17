@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="bg"></div>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <ul class="list-group no-hover" id="tracks">
+        <li class="list-group-item">
+          <div class="track-area">
+            <div class="track-heading">
+                {% if g.user.is_following(track) %}
+                  <form method="POST"
+                        action="/users/stop-following/{{ track.id}}">
+                    <button class="btn btn-primary">Remove Track from Own Library</button>
+                  </form>
+                {% else %}
+                  <form method="POST" action="/users/follow/{{ track.id }}">
+                    <button class="btn btn-outline-primary btn-sm">Add Track to Own Library</button>
+                  </form>
+                {% endif %}
+            </div>
+            <!-- really unsure how to style/structure this, but will at least get something down for a start -->
+            <ul class="single-track">
+                <li>Name: {{track.name}}</li>
+                <li>Artist: {{track.artist}}</li>
+                <li>Album: {{track.album}}</li>
+                <h4>Track Audio Features</h4>
+                <li>Acousticness: {{track.acousticness}}</li>
+                <li>Danceability: {{track.danceability}}</li>
+                <li>Duration: {{track.duration_ms}}</li>
+                <li>Energy: {{track.energy}}</li>
+                <li>Instrumentalness: {{track.instrumentalness}}</li>
+                <li>Key: {{track.key}}</li>
+                <li>Liveness: {{track.liveness}}</li>
+                <li>Loudness: {{track.loudness}}</li>
+                <li>Mode: {{track.mode}}</li>
+                <li>Speechiness: {{track.speechiness}}</li>
+                <li>Tempo: {{track.tempo}}</li>
+                <li>Time Signature: {{track.time_signature}}</li>
+                <li>Valence: {{track.valence}}</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+{% endblock %}
