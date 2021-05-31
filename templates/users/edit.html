@@ -4,7 +4,7 @@
 
   <div class="row justify-content-md-center">
     <div class="col-md-4">
-      <h2 class="join-message">Edit Your Profile.</h2>
+      <h2 class="join-message">Edit Your Info.</h2>
       <form method="POST" id="user_form">
         {{ form.hidden_tag() }}
 
@@ -15,7 +15,7 @@
           {{ field(placeholder=field.label.text, class="form-control") }}
         {% endfor %}
 
-        <p>To confirm changes, enter your password:</p>
+        <p id="edit-user-p">To confirm changes, enter your password:</p>
         {% if form.password.errors %}
           {% for error in form.password.errors %}
             <span class="text-danger">
@@ -25,9 +25,16 @@
         {% endif %}
         {{ form.password(placeholder="Enter your password to confirm", class="form-control") }}
 
-        <div class="edit-btn-area">
-          <button class="btn btn-success">Edit this user!</button>
-          <a href="/users/{{ user_id }}" class="btn btn-outline-secondary">Cancel</a>
+        <div class="container">
+          <div class="row btn-group">
+            <div class="col-auto">
+              <button class="btn edit-user-btn">Edit this user!</button>
+            </div>
+            <div class="col-auto">
+              <a href="/users/{{ user_id }}" class="btn btn-outline-secondary edit-user-btn">Cancel</a>
+            </div>
+            </div>
+          </div>
         </div>
       </form>
     </div>

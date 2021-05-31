@@ -1,26 +1,47 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<!-- Leaving the bare skeleton; (MUCH) styling to come -->
-<div class="container">
-    <div class="row">
-        <ul class="list-group" id="search_results">
-            {% for track in tracks %}
-                <!-- come back to the actual HTML here in a bit;
-                    see 'likes.html' on Warbler for reference -->
-                {{track.name}}
-                {{track.album}}
-                {{track.artist}}
-                
-                <!-- Here's the crux, I think: 
-                    somehow send along the {{track.id}}
-                    (this being the SPOTIFY id);
-                    this is what's compared to our db in the route - 
-                    through a form w/action='/tracks/search' ???-->
-            {% endfor %}
-        </ul>
+    <div class="row justify-content-center">
+      <div class="col-sm-9">
+        <h2 class="text-center" id="db-search-heading">Search Results</h2>
+        <div class="row">
+
+          {% for track in tracks %}
+
+            <div class="col-lg-4 col-md-6 col-12">
+              <div class="card track-card text-center">
+                <div class="card-body">
+                  <div class="card-contents">
+                    <a href="/tracks/{{track.id}}" class="card-link">
+                      <h5 class="card-title">{{ track.name }}</h5>
+                    </a>
+
+                    {% if g.user %}
+                      <!-- Can I come up with a better name than 'is_following()'? -->
+                      {% if g.user.is_following(track) %}
+                        <form method="POST"
+                              action="/users/stop-following/{{ track.id }}">
+                          <button class="btn btn-primary btn-sm">Remove Track from Library</button>
+                        </form>
+                      {% else %}
+                        <form method="POST"
+                              action="/users/follow/{{ track.id }}">
+                          <button class="btn btn-outline-primary btn-sm">Add Track to Library</button>
+                        </form>
+                      {% endif %}
+                    {% endif %}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          {% endfor %}
+
+        </div>
+      </div>
     </div>
-</div>
+
 
 <!-- This is duplicated - may want to extract into own template? -->
 <form id="search-form" action="/search" method="GET">

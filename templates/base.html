@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <title>Track Unpacker</title>
 
-  <link rel="stylesheet"
-        href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" 
+        rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   <script src="https://unpkg.com/jquery"></script>
   <script src="https://unpkg.com/popper"></script>
   <script src="https://unpkg.com/bootstrap"></script>
@@ -15,51 +15,47 @@
         href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
   <link rel="stylesheet" href="/static/stylesheets/style.css">
   <link rel="shortcut icon" href="/static/favicon.ico">
+  <link rel="stylesheet" href="<link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital@0;1&display=swap" rel="stylesheet">
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
-<!-- Honestly, I think it's best at this point to leave the nav/etc 
-     for after most/all of the general framework is set up.
-    But will leave the below as a guide for when it's time to address it 
-  
-    Change of heart! this provides the structure for the entire site;
-    it all starts from here!-->
-    <nav class="navbar navbar-expand">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a href="/" class="navbar-brand">
-        <!-- WILL NEED to come up with some image/text/etc to go below -->
-        <img src="" alt="logo">
-        <span>Track Unpacker</span>
-      </a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      {% if request.endpoint != None %}
-      <li>
-        <!-- ITEM TO STYLE: -->
-        <form class="navbar-form navbar-right" action="/tracks">
-          <input name="q" class="form-control" placeholder="Search our Database of Tracks" id="search">
-          <button class="btn btn-default">
-            <span class="fa fa-search"></span>
-          </button>
-        </form>
-        <!-- -------------- -->
-      </li>
-      {% endif %}
-      {% if not g.user %}
-      <li><a href="/signup">Sign up</a></li>
-      <li><a href="/login">Log in</a></li>
-      {% else %}
-      <li>
-        <a href="/users/{{ g.user.id }}">
-          <img src="{{ g.user.image_url }}" alt="{{ g.user.username }}">
+  <nav class="navbar navbar-expand">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="/" class="navbar-brand">
+          <img src="/static/images/logo-icon.png" alt="logo">
+          <span>Track Unpacker</span>
         </a>
-      </li>
-      <li><a href="/logout">Log out</a></li>
-      {% endif %}
-    </ul>
-  </div>
-</nav>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        {% if request.endpoint != None %}
+        <li>
+          <form class="navbar-form navbar-right" action="/tracks">
+            <input name="q" class="form-control" placeholder="Search our Database!" id="search">
+            <button class="btn btn-default">
+              <span class="fa fa-search"></span>
+            </button>
+          </form>
+        </li>
+        {% endif %}
+        <li><a href="/categories">Categories</a></li>
+        {% if not g.user %}
+        <li><a href="/signup">Sign up</a></li>
+        <li><a href="/login">Log in</a></li>
+        {% else %}
+        <li>
+          <a href="/users/{{ g.user.id }}">
+            <span>{{g.user.username}}</span>
+          </a>
+        </li>
+        <li><a href="/logout">Log out</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
 
 <!-- The below can be left unchanged from Warbler (I think) -->
 <div class="container">
@@ -71,5 +67,7 @@
   {% endblock %}
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,20 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<!-- Still very much undecided as to best structure for any text
- + the form; certainly not to mention style
 
-    structure - text prompt should be placeholder in search field?
-                or separate header/etc as below?-->
-<h3>Find Your Track Below!</h3>
+<div class="row justify-content-sm-center">
+    <div class="col-md-7 col-lg-5">
+        <div class="home-hero">
 
-<form id="search-form" action="/search" method="GET">
-    <div>
-        <label for="q">Track Name: </label>
-        <input type="text" name="q" id="q">
+            <h3>Find Your Track Below!</h3>
+
+            <form id="search-form" action="/search" method="GET" class="form-inline text-center">
+                <div>
+                    <label><label for="q">Track Name</label></label>
+                    <input class="form-control" type="text" name="q" id="q">
+                </div>
+                <button class="btn search-form-btn">Search Spotify!</button>
+            </form>
+        </div>
     </div>
-    <button>Search Spotify!</button>
-</form>
+</div>
 
 <!-- Seems like a pretty empty page - could/need add any more? -->
 

@@ -250,12 +250,8 @@ def list_tracks():
                 #   TO-DO after First Draft done
                   .limit(100)
                   .all())
-        for track in tracks:
-            print(track)
     else:
         tracks = Track.query.filter(Track.name.like(f"%{search}%"))
-        for track in tracks:
-            print(track)
 
     return render_template('tracks/index.html', tracks=tracks)
 
@@ -305,17 +301,16 @@ def search_spotify():
         to populate the search-results <div>."""
 
     search = request.args.get('q')
-
+    tracks = []
+    
     if not search:
-        tracks = {}
-        print(tracks)
-        print("Track Dictionary Empty")
+
+        print("Track List Empty")
     else:
         formatted_query = quote_plus(search)
         results = sp.search(formatted_query, limit=20)
 
         for result in results['tracks']['items']:
-            print(result['name'], result['artists'][0]['name'], result['album']['name'], result['id'])
             db_track = Track.query.filter(Track.spotify_id == result['id']).all()
 
             if not (db_track):
@@ -339,11 +334,43 @@ def search_spotify():
                                   valence=track_af[0]['valence'])
 
                 db.session.add(new_track)
-                db.session.commit()
+                tracks.append(new_track)
+
+            else:
+                track_af = sp.audio_features(result['id'])
+                track_to_add = Track(spotify_id=result['id'],
+                                  name=result['name'],
+                                  artist=result['artists'][0]['name'],
+                                  album=result['album']['name'],
+                                  acousticness=track_af[0]['acousticness'],
+                                  danceability=track_af[0]['danceability'],
+                                  duration_ms=track_af[0]['duration_ms'],
+                                  energy=track_af[0]['energy'],
+                                  instrumentalness=track_af[0]['instrumentalness'],
+                                  key=track_af[0]['key'],
+                                  liveness=track_af[0]['liveness'],
+                                  loudness=track_af[0]['loudness'],
+                                  mode=track_af[0]['mode'],
+                                  speechiness=track_af[0]['speechiness'],
+                                  tempo=track_af[0]['tempo'],
+                                  time_signature=track_af[0]['time_signature'],
+                                  valence=track_af[0]['valence'])
+
+                tracks.append(track_to_add)
 
 
-    return render_template('search.html', tracks=results)
+        db.session.commit()
 
+    for x in range(len(tracks)):
+        print (tracks[x])
+
+    return render_template('search.html', tracks=tracks)
+
+@app.route("/categories")
+def show_af_categories():
+
+
+    return render_template('af-categories.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
