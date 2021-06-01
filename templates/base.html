@@ -22,19 +22,22 @@
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
-  <nav class="navbar navbar-expand">
+  <nav class="navbar navbar-nav navbar-expand">
     <div class="container-fluid">
       <div class="navbar-header">
         <a href="/" class="navbar-brand">
           <img src="/static/images/logo-icon.png" alt="logo">
           <span>Track Unpacker</span>
         </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       </div>
       <ul class="nav navbar-nav navbar-right">
         {% if request.endpoint != None %}
         <li>
-          <form class="navbar-form navbar-right" action="/tracks">
-            <input name="q" class="form-control" placeholder="Search our Database!" id="search">
+          <form class="navbar-form navbar-right" action="/search">
+            <input name="q" class="form-control" placeholder="Search Spotify!" id="search">
             <button class="btn btn-default">
               <span class="fa fa-search"></span>
             </button>

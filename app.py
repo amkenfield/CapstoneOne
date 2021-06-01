@@ -285,9 +285,6 @@ def root():
 
 
     if g.user:
-        # similar to the show_user route, would want(?) to display the user's tracks here
-        # tracks = ??????
-
         return render_template('home.html')
     
     else:
@@ -312,6 +309,7 @@ def search_spotify():
 
         for result in results['tracks']['items']:
             db_track = Track.query.filter(Track.spotify_id == result['id']).all()
+            print(db_track)
 
             if not (db_track):
                 track_af = sp.audio_features(result['id'])
@@ -336,27 +334,28 @@ def search_spotify():
                 db.session.add(new_track)
                 tracks.append(new_track)
 
-            else:
-                track_af = sp.audio_features(result['id'])
-                track_to_add = Track(spotify_id=result['id'],
-                                  name=result['name'],
-                                  artist=result['artists'][0]['name'],
-                                  album=result['album']['name'],
-                                  acousticness=track_af[0]['acousticness'],
-                                  danceability=track_af[0]['danceability'],
-                                  duration_ms=track_af[0]['duration_ms'],
-                                  energy=track_af[0]['energy'],
-                                  instrumentalness=track_af[0]['instrumentalness'],
-                                  key=track_af[0]['key'],
-                                  liveness=track_af[0]['liveness'],
-                                  loudness=track_af[0]['loudness'],
-                                  mode=track_af[0]['mode'],
-                                  speechiness=track_af[0]['speechiness'],
-                                  tempo=track_af[0]['tempo'],
-                                  time_signature=track_af[0]['time_signature'],
-                                  valence=track_af[0]['valence'])
+            # else:
+            #     print(db_track)
+            #     track_af = sp.audio_features(result['id'])
+            #     track_to_add = Track(spotify_id=result['id'],
+            #                       name=result['name'],
+            #                       artist=result['artists'][0]['name'],
+            #                       album=result['album']['name'],
+            #                       acousticness=track_af[0]['acousticness'],
+            #                       danceability=track_af[0]['danceability'],
+            #                       duration_ms=track_af[0]['duration_ms'],
+            #                       energy=track_af[0]['energy'],
+            #                       instrumentalness=track_af[0]['instrumentalness'],
+            #                       key=track_af[0]['key'],
+            #                       liveness=track_af[0]['liveness'],
+            #                       loudness=track_af[0]['loudness'],
+            #                       mode=track_af[0]['mode'],
+            #                       speechiness=track_af[0]['speechiness'],
+            #                       tempo=track_af[0]['tempo'],
+            #                       time_signature=track_af[0]['time_signature'],
+            #                       valence=track_af[0]['valence'])
 
-                tracks.append(track_to_add)
+            #     tracks.append(track_to_add)
 
 
         db.session.commit()

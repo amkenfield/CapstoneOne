@@ -181,7 +181,7 @@ nav + .container {
 .user-form-button, .home-hero-btn, .search-form-btn {
   background-color: #379683;
   color: #EDF5E1;
-  margin-top: 2.5rem;
+  margin-top: 2.0rem;
 }
 
 .user-form-button:hover, .home-hero-btn:hover, .search-form-btn:hover {
@@ -482,4 +482,16 @@ span.cat-td-title {
   color: #05386B;
   font-weight: 500;
   text-decoration: underline;
+}
+
+/* Spotify Search Page */
+
+label#search-label {
+  color: #EDF5E1;
+  padding-bottom: .5rem;
+}
+
+#no-sp-results-msg {
+  color: #EDF5E1;
+  padding-bottom: 3rem;
 }
