@@ -115,7 +115,8 @@ class Track(db.Model):
     # (Same situation applies in the User.tracks backref below)
     users = db.relationship('User',
                             secondary='users_tracks',
-                            backref='own_tracks')
+                            backref='own_tracks',
+                            cascade="all, delete")
 
 class User(db.Model):
     """User able to save tracks to their profile"""
@@ -147,7 +148,8 @@ class User(db.Model):
 
     tracks = db.relationship('Track',
                              secondary='users_tracks',
-                             backref='track_users')
+                             backref='track_users',
+                             cascade="all, delete")
 
     def __repr__(self):
         return f"<User #{self.id}: {self.username}, {self.email}>"
@@ -205,11 +207,11 @@ class UserTrack(db.Model):
     #                primary_key=True)
 
     user_id = db.Column(db.Integer,
-                        db.ForeignKey('users.id'),
+                        db.ForeignKey('users.id', ondelete="CASCADE"),
                         primary_key=True)
 
     track_id = db.Column(db.Integer,
-                         db.ForeignKey('tracks.id'),
+                         db.ForeignKey('tracks.id', ondelete="CASCADE"),
                          primary_key=True)
 
 def connect_db(app):
